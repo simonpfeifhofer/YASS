@@ -47,7 +47,8 @@ namespace YASS.Web.Interface.Controllers
                 {
                     cmd.CommandText =
                         @"  CREATE OR REPLACE VIEW public.""Fact_Measure"" AS
-                            SELECT  ""ActivityIdentifier"" AS ""ActivityName"",
+                            SELECT  ""Timestamp"" AS ""Timestamp"",
+                                    ""ActivityIdentifier"" AS ""ActivityName"",
                                     ""GroupIdentifier"" AS ""GroupName"",
                                     ""EntityIdentifier"" AS ""EntityName"",
                                     ""SensorName"" AS ""SensorName"",
@@ -57,7 +58,26 @@ namespace YASS.Web.Interface.Controllers
                     cmd.ExecuteNonQuery();
                 }
 
-                using (var cmd = conn.CreateCommand()) {
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText =
+                        @"  CREATE OR REPLACE VIEW public.""Dim_Date"" AS
+                            SELECT EXTRACT(year FROM ""Timestamp"") AS ""Year"",
+                                EXTRACT(quarter FROM ""Timestamp"") AS ""Quarter"",
+                                EXTRACT(month FROM ""Timestamp"") AS ""Month"",
+                                EXTRACT(week FROM ""Timestamp"") AS ""Week"",
+                                EXTRACT(day FROM ""Timestamp"") AS ""Day"",
+                                EXTRACT(hour FROM ""Timestamp"") AS ""Hour"",
+                                EXTRACT(minute FROM ""Timestamp"") AS ""Minute"",
+                                EXTRACT(second FROM ""Timestamp"") AS ""Second"",
+	                            ""Timestamp"" AS ""Timestamp""
+                            FROM public.""Measure""
+                            ORDER BY ""Timestamp"" DESC";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = conn.CreateCommand())
+                {
                     cmd.CommandText =
                         @"  CREATE OR REPLACE VIEW public.""Dim_Activity"" AS
                             SELECT  ""ActivityIdentifier"" AS ""ActivityName"",

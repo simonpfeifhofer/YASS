@@ -1,0 +1,84 @@
+{
+  "name": "YASS",
+  "label": "YASS",
+  "description": "Yet Another Sensor System",
+  "cubes": [
+    {
+      "name": "simon_pfeifhofer_activity_data",
+      "label": "Activity data of Simon Pfeifhofer",
+      "dimensions": [
+        "date"
+      ],
+      "measures": [
+        {
+          "name": "Value",
+          "label": "Value"
+        }
+      ],
+      "aggregates": [
+        {
+          "name": "Value_Sum",
+          "label": "Sum",
+          "measure": "Value",
+          "function": "sum"
+        },
+        {
+          "name": "Value_Avg",
+          "label": "Average",
+          "measure": "Value",
+          "function": "avg"
+        },
+        {
+          "name": "Value_Min",
+          "label": "Minimum",
+          "measure": "Value",
+          "function": "min"
+        },
+        {
+          "name": "Value_Max",
+          "label": "Maximum",
+          "measure": "Value",
+          "function": "max"
+        },
+        {
+          "name": "Value_Count",
+          "label": "Count",
+          "measure": "Value",
+          "function": "count"
+        }
+      ],
+      "details": [
+
+      ],
+      "fact": "Fact_Measure",
+      "mappings": {
+
+      }
+    }
+  ],
+  "joins": [
+      {
+        "master": "Fact_Measure.Timestamp",
+        "detail": "Dim_Time.Timestamp"
+      },
+      {
+        "master": "Fact_Measure.ActivityName",
+        "detail": "Dim_Activity.ActivityName"
+      },
+      {
+        "master": "Fact_Measure.GroupName",
+        "detail": "Dim_Group.GroupName"
+      },
+      {
+        "master": "Fact_Measure.EntityName",
+        "detail": "Dim_Entity.EntityName"
+      },
+      {
+        "master": "Fact_Measure.SensorName",
+        "detail": "Dim_Sensor.SensorName"
+      }
+  ],
+  "dimensions": [
+
+  ]
+}
