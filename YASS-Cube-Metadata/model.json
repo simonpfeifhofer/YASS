@@ -4,11 +4,8 @@
   "description": "Yet Another Sensor System",
   "cubes": [
     {
-      "name": "simon_pfeifhofer_activity_data",
-      "label": "Activity data of Simon Pfeifhofer",
-      "dimensions": [
-        "date"
-      ],
+      "name": "EHR",
+      "label": "Electronical Health Records",
       "measures": [
         {
           "name": "Value",
@@ -51,34 +48,130 @@
 
       ],
       "fact": "Fact_Measure",
-      "mappings": {
-
-      }
+      "key": "Timestamp",
+      "dimensions": [
+        "Dim_Date",
+        "Dim_Activity",
+        "Dim_Group",
+        "Dim_Entity",
+        "Dim_Sensor_HeartRate"
+      ]
     }
   ],
   "joins": [
-      {
-        "master": "Fact_Measure.Timestamp",
-        "detail": "Dim_Time.Timestamp"
-      },
-      {
-        "master": "Fact_Measure.ActivityName",
-        "detail": "Dim_Activity.ActivityName"
-      },
-      {
-        "master": "Fact_Measure.GroupName",
-        "detail": "Dim_Group.GroupName"
-      },
-      {
-        "master": "Fact_Measure.EntityName",
-        "detail": "Dim_Entity.EntityName"
-      },
-      {
-        "master": "Fact_Measure.SensorName",
-        "detail": "Dim_Sensor.SensorName"
-      }
+    {
+      "master": "Fact_Measure.Timestamp",
+      "detail": "Dim_Date.Timestamp"
+    },
+    {
+      "master": "Fact_Measure.ActivityName",
+      "detail": "Dim_Activity.ActivityName"
+    },
+    {
+      "master": "Fact_Measure.GroupName",
+      "detail": "Dim_Group.GroupName"
+    },
+    {
+      "master": "Fact_Measure.EntityName",
+      "detail": "Dim_Entity.EntityName"
+    },
+    {
+      "master": "Fact_Measure.SensorName",
+      "detail": "Dim_Sensor_HeartRate.SensorName"
+    }
   ],
   "dimensions": [
-
+    {
+      "name": "Dim_Date",
+      "label": "Date and time",
+      "key": "Timestamp",
+      "role": "time",
+      "attributes": [ "Timestamp", "Year", "Quarter", "Month", "Week", "Day", "Hour", "Minute", "Second" ],
+      "levels": [
+        {
+          "name": "Year",
+          "label": "Year",
+          "key": "Year",
+          "attributes": [ "Year" ]
+        },
+        {
+          "name": "Quarter",
+          "label": "Quarter",
+          "key": "Quarter",
+          "attributes": [ "Quarter" ]
+        },
+        {
+          "name": "Month",
+          "label": "Month",
+          "key": "Month",
+          "attributes": [ "Month" ]
+        },
+        {
+          "name": "Week",
+          "label": "Week",
+          "key": "Week",
+          "attributes": [ "Week" ]
+        },
+        {
+          "name": "Day",
+          "label": "Day",
+          "key": "Day",
+          "attributes": [ "Day" ]
+        },
+        {
+          "name": "Hour",
+          "label": "Hour",
+          "key": "Hour",
+          "attributes": [ "Hour" ]
+        },
+        {
+          "name": "Minute",
+          "label": "Minute",
+          "key": "Minute",
+          "attributes": [ "Minute" ]
+        },
+        {
+          "name": "Second",
+          "label": "Second",
+          "key": "Second",
+          "attributes": [ "Second" ]
+        }
+      ],
+      "hierarchies": [
+        {
+          "name": "default",
+          "levels": [
+            "Year",
+            "Quarter",
+            "Month",
+            "Week",
+            "Day",
+            "Hour",
+            "Minute",
+            "Second"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dim_Activity",
+      "label": "Activity",
+      "attributes": [ "ActivityName"]
+    },
+    {
+      "name": "Dim_Group",
+      "label": "Group",
+      "attributes": [ "GroupName"]
+    },
+    {
+      "name": "Dim_Entity",
+      "label": "Entity",
+      "attributes": [ "EntityName"]
+    },
+    {
+      "name": "Dim_Sensor_HeartRate",
+      "label": "Sensor",
+      "attributes": [ "SensorName"]
+    }
   ]
 }

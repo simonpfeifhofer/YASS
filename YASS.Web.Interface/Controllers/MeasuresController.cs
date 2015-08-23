@@ -8,6 +8,7 @@ using NLog;
 using Npgsql;
 using System.Configuration;
 using System.Data.Common;
+using System.Text.RegularExpressions;
 
 namespace YASS.Web.Interface.Controllers
 {
@@ -22,6 +23,10 @@ namespace YASS.Web.Interface.Controllers
         public void Post([FromBody]Measure measure){
 
             _logger.Debug("New measure received");
+
+            if(!Regex.Match(measure.SensorName, "[a-zA-Z]+").Success){
+                throw new Exception("Invalid SensorName. Only letter-combinations are supported.");
+            }
 
             using (var conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
             {
@@ -125,12 +130,12 @@ namespace YASS.Web.Interface.Controllers
                                 SELECT  ""SensorName"" AS ""SensorName"",
 	                                COUNT(*) AS ""Weight""
                                 FROM    public.""Measure""
-                                WHERE	""SensorName"" = '@SensorName' 
+                                WHERE	""SensorName"" = '{1}' 
                                 GROUP BY ""SensorName""
                                 ORDER BY COUNT(*) DESC",
-                            commandBuilder.QuoteIdentifier(string.Format("Dim_Sensor_{0}", measure.SensorName))
+                            commandBuilder.QuoteIdentifier(string.Format("Dim_Sensor_{0}", measure.SensorName)),
+                            measure.SensorName
                         );
-                    cmd.Parameters.AddWithValue("@SensorName", measure.SensorName);
                     cmd.ExecuteNonQuery();
                 }
 
