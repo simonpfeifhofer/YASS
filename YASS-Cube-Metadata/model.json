@@ -55,29 +55,29 @@
         "Dim_Group",
         "Dim_Entity",
         "Dim_Sensor_HeartRate"
+      ],
+      "joins": [
+        {
+          "master": "Fact_Measure.Timestamp",
+          "detail": "Dim_Date.Timestamp"
+        },
+        {
+          "master": "Fact_Measure.ActivityName",
+          "detail": "Dim_Activity.ActivityName"
+        },
+        {
+          "master": "Fact_Measure.GroupName",
+          "detail": "Dim_Group.GroupName"
+        },
+        {
+          "master": "Fact_Measure.EntityName",
+          "detail": "Dim_Entity.EntityName"
+        },
+        {
+          "master": "Fact_Measure.SensorName",
+          "detail": "Dim_Sensor_HeartRate.SensorName"
+        }
       ]
-    }
-  ],
-  "joins": [
-    {
-      "master": "Fact_Measure.Timestamp",
-      "detail": "Dim_Date.Timestamp"
-    },
-    {
-      "master": "Fact_Measure.ActivityName",
-      "detail": "Dim_Activity.ActivityName"
-    },
-    {
-      "master": "Fact_Measure.GroupName",
-      "detail": "Dim_Group.GroupName"
-    },
-    {
-      "master": "Fact_Measure.EntityName",
-      "detail": "Dim_Entity.EntityName"
-    },
-    {
-      "master": "Fact_Measure.SensorName",
-      "detail": "Dim_Sensor_HeartRate.SensorName"
     }
   ],
   "dimensions": [
@@ -86,7 +86,7 @@
       "label": "Date and time",
       "key": "Timestamp",
       "role": "time",
-      "attributes": [ "Timestamp", "Year", "Quarter", "Month", "Week", "Day", "Hour", "Minute", "Second" ],
+      "attributes": [ "Year", "Quarter", "Month", "Week", "Day", "Hour", "Minute", "Second", "Timestamp" ],
       "levels": [
         {
           "name": "Year",
@@ -135,6 +135,12 @@
           "label": "Second",
           "key": "Second",
           "attributes": [ "Second" ]
+        },
+        {
+          "name": "Timestamp",
+          "label": "Timestamp",
+          "key": "Timestamp",
+          "attributes": [ "Timestamp" ]
         }
       ],
       "hierarchies": [
@@ -156,22 +162,22 @@
     {
       "name": "Dim_Activity",
       "label": "Activity",
-      "attributes": [ "ActivityName"]
+      "attributes": [ "ActivityName" ]
     },
     {
       "name": "Dim_Group",
       "label": "Group",
-      "attributes": [ "GroupName"]
+      "attributes": [ "GroupName" ]
     },
     {
       "name": "Dim_Entity",
       "label": "Entity",
-      "attributes": [ "EntityName"]
+      "attributes": [ "EntityName" ]
     },
     {
       "name": "Dim_Sensor_HeartRate",
       "label": "Sensor",
-      "attributes": [ "SensorName"]
+      "attributes": [ "SensorName" ]
     }
   ]
 }
